@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { LogOut } from "react-native-feather";
-import SmallerHeader from "../common/SmallerHeader";
+import { Header2 } from "../../components/headers";
 import BottomBar from "./BottomBar";
 import UserCard from "./UserCard";
 import { COLORS } from "../common/constants";
@@ -19,7 +19,7 @@ export default function PostsScreen() {
 		>
 			<View>
 				<View style={styles.topBar}>
-					<SmallerHeader>Публікації</SmallerHeader>
+					<Header2>Публікації</Header2>
 					<LogOut
 						style={{ position: "absolute", right: 10, top: 10 }}
 						stroke={COLORS.inactive}

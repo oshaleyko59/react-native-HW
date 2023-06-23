@@ -14,17 +14,5 @@ export default function App() {
 		return null;
 	}
 
-	return <PostsScreen />;
+	return <LoginScreen />;
 }
-
-
-/* for TEST:
-//import FormTextInput from "./src/Screens/common/FormTextInput";
-
-		<FormTextInput
-			placeholder="test"
-			value="value"
-			onFocus={() => console.log("Focused")}
-			onChangeText={() => console.log("onChangeText")}
-		/>
-	); */

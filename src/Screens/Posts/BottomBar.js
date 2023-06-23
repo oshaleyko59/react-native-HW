@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { Grid, User, Plus } from "react-native-feather";
-import AddPublicationButton from "../common/buttons/AddPublicationButton";
+import {AddPublicationBtn} from "../../components/buttons";
 import { COLORS } from "../common/constants";
 //import { styles } from "../common/styles";
 
@@ -14,7 +14,7 @@ export default function BottomBar({onPress}) {
 					width={24}
 					height={24}
 				/>
-				<AddPublicationButton />
+				<AddPublicationBtn />
 				<User
 					stroke={COLORS.inactive}
 					fill={COLORS.mainBkg}

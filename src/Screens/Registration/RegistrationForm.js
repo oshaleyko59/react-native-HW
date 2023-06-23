@@ -1,10 +1,18 @@
 import { useState } from "react";
-import { View, TextInput } from "react-native";
-import MainHeader from "../common/MainHeader";
-import AuthMainBtn from "../common/buttons/AuthMainBtn";
-import AuthSecondaryBtn from "../common/buttons/AuthSecondaryBtn";
-import PasswordInput from "../common/PasswordInput";
+import {
+	View,
+	TouchableWithoutFeedback,
+	StyleSheet,
+	Platform,
+	Keyboard,
+} from "react-native";
+import { MainHeader } from "../../components/headers";
+import {AuthMainBtn, AuthSecondaryBtn} from "../../components/buttons";
+import PasswordInput from "../../components/inputs/PasswordInput";
+import EmailInput from "../../components/inputs/EmailInput";
+import StyledTextInput from "../../components/inputs/StyledTextInput";
 import { styles } from "../common/styles";
+//import { COLORS } from "../common/constants";
 
 const initialState = {
 	name: "",
@@ -12,49 +20,59 @@ const initialState = {
 	password: "",
 };
 
-export default function RegistrationForm() {
+export default function RegistrationForm({ signUp }) {
 	const [state, setState] = useState(initialState);
+	const [kbdStatus, setKbdStatus] = useState(false);
 
+	const handleRegisterPress = () => {
+		signUp(state.name, state.email, state.password);
+	};
+
+	//TODO: setKbdStatus
 	return (
-		<View style={[styles.container, { paddingTop: 92, paddingBottom: 78 }]}>
-			<MainHeader>Реєстрація</MainHeader>
-			<TextInput
-				style={styles.input}
-				placeholder="Логін"
-				value={state.name}
-				onFocus={() => console.log("Login input got focus")}
-				onChangeText={(value) =>
-					setState((prevState) => ({ ...prevState, name: value }))
-				}
-			/>
-			<TextInput
-				style={styles.input}
-				inputMode="email"
-				placeholder="Адреса електронної пошти"
-				value={state.email}
-				onFocus={() => console.log("Email input got focus")}
-				onChangeText={(value) =>
-					setState((prevState) => ({ ...prevState, email: value }))
-				}
-			/>
-			<PasswordInput
-				value={state.password}
-				onChangeText={(value) =>
-					setState((prevState) => ({ ...prevState, password: value }))
-				}
-			/>
-			<View style={{ gap: 16, marginTop: 9 }}>
-				<AuthMainBtn
-					title="Зареєстуватися"
-					onPress={() => console.log("Register pressed")}
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<View
+				style={[styles.formContainer, { paddingTop: 92, paddingBottom: 32 }]}
+			>
+				<MainHeader>Реєстрація</MainHeader>
+				<StyledTextInput
+					autoComplete="name"
+					autoCapitalize="words"
+					placeholder="Логін"
+					value={state.name}
+					onChangeText={(value) =>
+						setState((prevState) => ({ ...prevState, name: value }))
+					}
+					setKbdStatus={setKbdStatus}
 				/>
-				<AuthSecondaryBtn
-					title="Увійти"
-					hint="Вже є акаунт?"
-					onPress={() => console.log("->Login screen")}
+				<EmailInput
+					value={state.email}
+					onChangeText={(value) =>
+						setState((prevState) => ({ ...prevState, email: value }))
+					}
+					setKbdStatus={setKbdStatus}
 				/>
+				<PasswordInput
+					value={state.password}
+					onChangeText={(value) =>
+						setState((prevState) => ({ ...prevState, password: value }))
+					}
+					setKbdStatus={setKbdStatus}
+				/>
+				{!kbdStatus && (
+					<View style={{ gap: 16, marginTop: 21 }}>
+						<AuthMainBtn title="Зареєстуватися" onPress={handleRegisterPress} />
+						<AuthSecondaryBtn
+							title="Увійти"
+							hint="Вже є акаунт?"
+							onPress={() =>
+								console.info("@RegistrationForm>> 'Login' pressed")
+							}
+						/>
+						<View style={{ height: 84 }} />
+					</View>
+				)}
 			</View>
-		</View>
+		</TouchableWithoutFeedback>
 	);
 }
-//, style={{ paddingTop: 9 }}
